@@ -6,7 +6,6 @@ namespace MageOS\AutomaticTranslation\Plugin;
 
 use Magento\Catalog\Controller\Adminhtml\Category\Save;
 use Magento\Framework\Message\ManagerInterface;
-use Magento\Framework\Filter\FilterManager;
 use MageOS\AutomaticTranslation\Helper\ModuleConfig;
 use MageOS\AutomaticTranslation\Helper\Service;
 use MageOS\AutomaticTranslation\Service\TranslateParsedContent;
