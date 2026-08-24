@@ -60,12 +60,16 @@ class MigrateConfigPaths implements DataPatchInterface
     {
         $scopes = [[ScopeConfigInterface::SCOPE_TYPE_DEFAULT, 0]];
 
-        foreach ($this->storeManager->getWebsites() as $website) {
-            $scopes[] = [ScopeInterface::SCOPE_WEBSITES, (int)$website->getId()];
-        }
+        try {
+            foreach ($this->storeManager->getWebsites() as $website) {
+                $scopes[] = [ScopeInterface::SCOPE_WEBSITES, (int)$website->getId()];
+            }
 
-        foreach ($this->storeManager->getStores() as $store) {
-            $scopes[] = [ScopeInterface::SCOPE_STORES, (int)$store->getId()];
+            foreach ($this->storeManager->getStores() as $store) {
+                $scopes[] = [ScopeInterface::SCOPE_STORES, (int)$store->getId()];
+            }
+        } catch (\DomainException $e) {
+            // no stores/websites yet (fresh install) — default scope is enough
         }
 
         foreach ($scopes as [$scope, $scopeId]) {
