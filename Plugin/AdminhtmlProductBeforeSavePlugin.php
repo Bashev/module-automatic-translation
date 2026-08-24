@@ -6,7 +6,6 @@ namespace MageOS\AutomaticTranslation\Plugin;
 
 use Magento\Catalog\Controller\Adminhtml\Product\Save;
 use Magento\Catalog\Model\ResourceModel\Product\Gallery;
-use Magento\Framework\Filter\FilterManager;
 use Magento\Framework\Message\ManagerInterface;
 use MageOS\AutomaticTranslation\Helper\ModuleConfig;
 use MageOS\AutomaticTranslation\Helper\Service;
@@ -34,8 +33,7 @@ class AdminhtmlProductBeforeSavePlugin
         protected Gallery $gallery,
         protected ManagerInterface $messageManager,
         protected Logger $logger,
-        protected TranslateParsedContent $translateParsedContent,
-        protected FilterManager $filterManager
+        protected TranslateParsedContent $translateParsedContent
     ) {
     }
 
@@ -90,8 +88,8 @@ class AdminhtmlProductBeforeSavePlugin
                 );
 
                 if ($attributeCode === 'url_key') {
-                    $requestPostValue["product"][$attributeCode] = $this->filterManager->translitUrl(
-                        $requestPostValue["product"][$attributeCode]
+                    $requestPostValue["product"][$attributeCode] = strtolower(
+                        (string)preg_replace('#[^0-9a-z]+#i', '-', $requestPostValue["product"][$attributeCode])
                     );
                 }
 

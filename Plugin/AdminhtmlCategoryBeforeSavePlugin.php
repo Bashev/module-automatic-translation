@@ -36,8 +36,7 @@ class AdminhtmlCategoryBeforeSavePlugin
         protected Service $serviceHelper,
         protected ManagerInterface $messageManager,
         protected Logger $logger,
-        protected TranslateParsedContent $translateParsedContent,
-        protected FilterManager $filterManager
+        protected TranslateParsedContent $translateParsedContent
     ) {
     }
 
@@ -75,8 +74,8 @@ class AdminhtmlCategoryBeforeSavePlugin
                     );
 
                     if ($attributeCode === 'url_key') {
-                        $requestPostValue[$attributeCode] = $this->filterManager->translitUrl(
-                            (string)$requestPostValue[$attributeCode]
+                        $requestPostValue[$attributeCode] = strtolower(
+                            (string)preg_replace('#[^0-9a-z]+#i', '-', $requestPostValue[$attributeCode])
                         );
                     }
 
